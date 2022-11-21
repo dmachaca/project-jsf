@@ -3,7 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
 </h:head>
 
 <h:body>
@@ -18,7 +18,8 @@
 			<h:inputSecret id="txtPassword" value="#{loginController.password}"
 				required="true" requiredMessage="La contraseña es obligatorio"></h:inputSecret>
 
-			<h:commandButton value="Ingresar" action="#{loginController.ingresar}"></h:commandButton>
+			<h:commandButton value="Ingresar"
+				action="#{loginController.ingresar}"></h:commandButton>
 		</h:panelGrid>
 
 	</h:form>
