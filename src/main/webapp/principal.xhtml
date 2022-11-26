@@ -5,32 +5,54 @@
 
 <h:head>
 	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 </h:head>
 
 <h:body>
-	<h1>Bienvenido a la pagina principal</h1>
-	<h:dataTable id="tbEmpleados" var="empleado" value="#{principalController.listEmpleados}" headerClass="headerTable" rowClasses="rowTable rowTableLine">
-		<h:column>
-			<f:facet name="header">Nombre</f:facet>
-			<h:outputText value="#{empleado.nombre}"></h:outputText>
-		</h:column>
-		<h:column>
-			<f:facet name="header">Primer Apellido</f:facet>
-			<h:outputText value="#{empleado.primerApellido}"></h:outputText>
-		</h:column>
-		<h:column>
-			<f:facet name="header">Segundo Apellido</f:facet>
-			<h:outputText value="#{empleado.segundoApellido}"></h:outputText>
-		</h:column>
-		<h:column>
-			<f:facet name="header">Puesto</f:facet>
-			<h:outputText value="#{empleado.puesto}"></h:outputText>
-		</h:column>
-		<h:column>
-			<f:facet name="header">Estatus</f:facet>
-			<h:outputText value="HABILITADO" rendered="#{empleado.estatus}"></h:outputText>
-			<h:outputText value="INHABILITADO" rendered="#{!empleado.estatus}"></h:outputText>
-		</h:column>
-	</h:dataTable>
+	<p:outputLabel value="Bienvenido #{sessionController.usuarioDTO.usuario} a la pantalla´principal"></p:outputLabel>
+	<h:form>
+			<p:commandButton value="Cerra Sesioón" action="#{sessionClosedController.cerrarSession}"></p:commandButton>
+	<!-- 	<p:commandButton value="XLS" styleClass="mr-2 mb-2">
+            <p:dataExporter type="xlsxstream" target="tbl" fileName="products"
+                            postProcessor="#{customizedDocumentsView.postProcessXLS}"/>
+        </p:commandButton>
+        
+		-->
+		<p:dataTable id="tbEmpleados" var="empleado"
+			value="#{principalController.listEmpleados}" paginator="true"
+			rows="10" paginatorPosition="both"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+			rowsPerPageTemplate="5,10,{ShowAll|'All'}"
+			emptyMessage="No se encontraron registros."
+			filteredValue="#{principalController.empleadosFiltrados}"
+			 reflow="true">
+
+
+			<p:column headerText="Nombre" filterBy="#{empleado.nombre}"
+				filterMatchMode="contains" sortBy="#{empleado.nombre}">
+				<h:outputText value="#{empleado.nombre}"></h:outputText>
+			</p:column>
+			<p:column headerText="Primer Apellido"
+				filterBy="#{empleado.primerApellido}" filterMatchMode="contains"
+				sortBy="#{empleado.primerApellido}">
+				<h:outputText value="#{empleado.primerApellido}"></h:outputText>
+			</p:column>
+			<p:column headerText="Segundo Apellido"
+				filterBy="#{empleado.segundoApellido}" filterMatchMode="contains"
+				sortBy="#{empleado.primerApellido}">
+				<h:outputText value="#{empleado.segundoApellido}"></h:outputText>
+			</p:column>
+			<p:column headerText="Puesto" filterBy="#{empleado.puesto}"
+				filterMatchMode="contains" sortBy="#{empleado.puesto}@re">
+				<h:outputText value="#{empleado.puesto}"></h:outputText>
+			</p:column>
+			<p:column headerText="Estatus">
+				<h:outputText value="HABILITADO" rendered="#{empleado.estatus}"></h:outputText>
+				<h:outputText value="INHABILITADO" rendered="#{!empleado.estatus}"></h:outputText>
+			</p:column>
+		</p:dataTable>
+	</h:form>
+
 </h:body>
 </html>
